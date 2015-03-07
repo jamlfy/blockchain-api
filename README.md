@@ -15,12 +15,6 @@ npm install blockchain-api
 var BlockchainApi = require('blockchain-wallet'),
     blockChain = new BlockchainApi(); // Basic
 
-var wallet = blockChain.wallet('pass1', 'pass2');
-
-wallet.balance(function(err, data){
-  
-});
-
 blockChain.receive('Adrress', 'url', function(err, data){
   
 });
@@ -50,6 +44,7 @@ blockChain.api().address([
   
 });
 
+// Wallet
 var wallet = blockChain.wallet("YourGuid", "YourPassword", "SecondPassword");
 
 wallet.list(function(err, data) {

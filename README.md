@@ -69,6 +69,3 @@ wallet.payment("1JArS6jzE3AJ9sZ3aFij1BmTcpFGgN86hA", 500, {"note": "Thanks"}, fu
 
 A method-by-method [reference](https://github.com/pskupinski/node-blockchain-wallet/wiki/API-Reference) is available on the wiki.
 
-## License
-
-This module is [ISC licensed](https://github.com/pskupinski/node-blockchain-wallet/blob/master/LICENSE.txt).

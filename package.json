@@ -1,0 +1,19 @@
+{
+	"name": "blockchain-api",
+	"description": "blockchain.info wallet API client for node.js",
+	"version": "0.1.0",
+	"keywords": ["btc", "bitcoin", "blockchain", "wallet", "api"],
+	"author": "alejonext",
+	"license": "MIT",
+	"dependencies": {
+		"request": "2.34.0"
+	},
+	"main": "lib/blockchain.js",
+	"engines": {
+		"node": "~0.10"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git@github.com:alejonext/blockchain-api"
+	}
+}

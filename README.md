@@ -5,8 +5,6 @@ An unofficial node.js client for the [blockchain.info wallet api](http://blockch
 
 ## Installation
 
-node-blockchain-wallet is available as `blockchain-wallet` on npm.
-
 ```
 npm install blockchain-api
 ```
@@ -16,6 +14,12 @@ npm install blockchain-api
 ```javascript
 var BlockchainApi = require('blockchain-wallet'),
     blockChain = new BlockchainApi(); // Basic
+
+var wallet = blockChain.wallet('pass1', 'pass2');
+
+wallet.balance(function(err, data){
+  
+});
 
 blockChain.receive('Adrress', 'url', function(err, data){
   

@@ -26,17 +26,21 @@ export class chain {
 		this.__Sender(`${this._url}api/v2/create_wallet`, obj, callback );
 	}
 
-	chart (type, params, callback) {
-		params.format = 'json';
-		this.__Sender(`${this._url}charts/${type}`, params, callback );
+	chart (type, callback) {
+		let format = 'json';
+		this.__Sender(`${this._url}charts/${type}`, { format }, callback );
 	}
 
-	ticker (params, callback) {
+	ticker (callback) {
 		this.__Sender(`${this._url}ticker`, params, callback );
 	}
 
 	toBTC (params, callback) {
 		this.__Sender(`${this._url}tobtc`, params, callback );
+	}
+
+	stats (callback) {
+		this.__Sender(`${this._url}stats`, params, callback );
 	}
 
 	/**
@@ -51,19 +55,17 @@ export class chain {
 		this._pass1 = pass1;
 		this._pass2 = pass2;
 
-		this.wallet.balance = (obj, cb) => {
-			if(typeof obj === 'function'){
-				cb = obj;
-				obj = {};
-			}
-
-			obj.password = this._pass1;
-			this.__Sender(`${this._url}merchant/${this._guid}/balance`, obj, cb);
-		};
-
+		this.wallet.balance = (cb) => this.__Sender(`${this._url}merchant/${this._guid}/balance`, { password : this._pass1 }, cb);
 		this.wallet.list = (cb) => this.__Sender(`${this._url}merchant/${this._guid}/list`, { password : this._pass1 }, cb);
+		this.wallet.addressBalance = (address, confirmations=3, cb) => this.__Sender(`${this._url}merchant/${this._guid}/address_balance`, { password : this._pass1, address, confirmations }, cb);
 
-		this.wallet.addressBalance = (address, confirmations, cb) => this.__Sender(`${this._url}merchant/${this._guid}/address_balance`, { password : this._pass1, address, confirmations }, cb);
+		this.wallet.newAddress = (label, cb) => this.__Sender(`${this._url}merchant/${this._guid}/new_address`, { password : this._pass1, second_password : this._pass2, label }, cb);
+
+		this.wallet.archiveAddress = (address, cb) => this.__Sender(`${this._url}merchant/${this._guid}/archive_address`, { password : this._pass1, second_password : this._pass2, address }, cb);
+
+		this.wallet.unarchiveAddress = (address, cb) =>  this.__Sender(`${this._url}merchant/${this._guid}/unarchive_address`, { password : this._pass1, second_password : this._pass2, address }, cb);
+
+		this.wallet.autoConsolidate = (days, cb) => this.__Sender(`${this._url}merchant/${this._guid}/auto_consolidate`, { password : this._pass1, second_password : this._pass2, days }, cb);
 
 		this.wallet.payment = (to, amount, obj, cb) => {
 			if(typeof obj === 'function'){
@@ -89,24 +91,6 @@ export class chain {
 			obj.recipients = JSON.stringify(recipients);
 			this.__Sender(`${this._url}merchant/${this._guid}/sendmany`, obj, cb);
 		};
-
-		this.wallet.newAddress = (obj, cb) => {
-			if(typeof obj === 'function'){
-				cb = obj;
-				obj = {};
-			}
-
-			obj.password = this._pass1;
-			obj.second_password = this._pass2;
-			this.__Sender(`${this._url}merchant/${this._guid}/new_address`, obj, cb);
-		};
-
-		this.wallet.archiveAddress = (address, cb) => this.__Sender(`${this._url}merchant/${this._guid}/archive_address`, { password : this._pass1, second_password : this._pass2, address }, cb);
-
-		this.wallet.unarchiveAddress = (address, cb) =>  this.__Sender(`${this._url}merchant/${this._guid}/unarchive_address`, { password : this._pass1, second_password : this._pass2, address }, cb);
-
-		this.wallet.autoConsolidate = (days, cb) => this.__Sender(`${this._url}merchant/${this._guid}/auto_consolidate`, { password : this._pass1, second_password : this._pass2, days }, cb);
-
 		return this.wallet;
 	}
 
@@ -175,14 +159,14 @@ export class chain {
 				urx = 'multiaddr';
 				types = '';
 			}
-			this.__Sender(urx + '/' + types, { format, active }, callback );
+			this.__Sender(this._url + urx + '/' + types, { format, active }, callback );
 		};
 		/**
 		 * [description]
 		 * @param  {String|Array}   active   [description]
 		 * @param  {Function}       callback [description]
 		 */
-		this.api.unspent = (active, callback) =>{
+		this.api.unspent = (active, callback) => {
 			if(!Array.isArray(active)){
 				active = [ active ];
 			}
@@ -225,21 +209,18 @@ export class chain {
 				return callback(new Error(err ? err : response.statusCode));
 			}
 
-			if( /\d/.test(body[0]) )
-				return callback(err, parseFloat(body) );
-
-			var result;
 			try {
-				result = JSON.parse(body);
+				let result = JSON.parse(body);
+				if(result && result.error) {
+					return callback(new Error(result.error), result);
+				}
+
+				callback(null, result);
 			} catch (err) {
 				return callback(err);
 			}
 
-			if(result.error) {
-				return callback(new Error(result.error), result);
-			}
-
-			callback(null, result);
+			
 		});
 	}
 }

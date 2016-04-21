@@ -2,7 +2,9 @@ import * as request from 'request';
 import {stringify} from 'querystring';
 /**
  * let block = new chain();
- * let wallet = block.wallet(guid, pass1, pass2);
+ * let wallet1 = block.wallet(guid, pass1, pass2);
+ * wallet.my..
+ * let wallet2 = block.wallet(guid, pass1, pass2);
  * wallet.my..
  */
 export default chain;
@@ -13,10 +15,11 @@ export class chain {
 	 * @param  {String} options.lang   Lang 
 	 * @param  {String} options.api    The new API
 	 */
+	static format = 'json';
 	constructor({
 		domain = 'https://blockchain.info/',
 		lang =  'es',
-		api ='https://api.blockchain.info/v2/'
+		api ='https://api.blockchain.info/v2/',
 	}) {
 		this._url = domain + lang + '/';
 		this._api = api;
@@ -27,8 +30,7 @@ export class chain {
 	}
 
 	chart (type, callback) {
-		let format = 'json';
-		this.__Sender(`${this._url}charts/${type}`, { format }, callback );
+		this.__Sender(`${this._url}charts/${type}`, { format : chain.format }, callback );
 	}
 
 	ticker (callback) {
@@ -64,9 +66,9 @@ export class chain {
 		this.wallet.autoConsolidate = (days, cb) => this.__Sender(`${this._url}merchant/${guid}/auto_consolidate`, { password, second_password, days }, cb);
 
 		this.wallet.payment = (to, amount, obj, cb) => {
-			let params ={ to, amount, password, second_password };
+			let params = { to, amount, password, second_password };
 
-			if(typeof obj != 'function'){
+			if(typeof obj == 'object'){
 				for (let i in obj) {
 					params[i] = obj[i];
 				}
@@ -78,7 +80,7 @@ export class chain {
 		this.wallet.sendMany = (recipients, obj, cb) => {
 			let params ={ recipients : JSON.stringify(recipients), password, second_password };
 			
-			if(typeof obj != 'function'){
+			if(typeof obj == 'object'){
 				for (let i in obj) {
 					params[i] = obj[i];
 				}
@@ -136,11 +138,10 @@ export class chain {
 
 	/**
 	 * API old
-	 * @param  {String} format Format basic is JSON
 	 * @return {Object}        The methods in API
 	 */
-	api (format='json'){
-
+	api (){
+		let format = chain.format;
 		/**
 		 * Adress
 		 * @param  {String|Array}   types    [description]

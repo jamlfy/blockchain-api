@@ -50,46 +50,41 @@ export class chain {
 	 * @param  {string} pass2 Password second
 	 * @return {object}       The wallet
 	 */
-	wallet (guid, pass1, pass2) {
-		this._guid = guid;
-		this._pass1 = pass1;
-		this._pass2 = pass2;
+	wallet (guid, password, second_password) {
+		this.wallet.balance = (cb) => this.__Sender(`${this._url}merchant/${guid}/balance`, { password }, cb);
+		this.wallet.list = (cb) => this.__Sender(`${this._url}merchant/${guid}/list`, { password }, cb);
+		this.wallet.addressBalance = (address, confirmations=3, cb) => this.__Sender(`${this._url}merchant/${guid}/address_balance`, { password, address, confirmations }, cb);
 
-		this.wallet.balance = (cb) => this.__Sender(`${this._url}merchant/${this._guid}/balance`, { password : this._pass1 }, cb);
-		this.wallet.list = (cb) => this.__Sender(`${this._url}merchant/${this._guid}/list`, { password : this._pass1 }, cb);
-		this.wallet.addressBalance = (address, confirmations=3, cb) => this.__Sender(`${this._url}merchant/${this._guid}/address_balance`, { password : this._pass1, address, confirmations }, cb);
+		this.wallet.newAddress = (label, cb) => this.__Sender(`${this._url}merchant/${guid}/new_address`, { password, second_password, label }, cb);
 
-		this.wallet.newAddress = (label, cb) => this.__Sender(`${this._url}merchant/${this._guid}/new_address`, { password : this._pass1, second_password : this._pass2, label }, cb);
+		this.wallet.archiveAddress = (address, cb) => this.__Sender(`${this._url}merchant/${guid}/archive_address`, { password, second_password, address }, cb);
 
-		this.wallet.archiveAddress = (address, cb) => this.__Sender(`${this._url}merchant/${this._guid}/archive_address`, { password : this._pass1, second_password : this._pass2, address }, cb);
+		this.wallet.unarchiveAddress = (address, cb) =>  this.__Sender(`${this._url}merchant/${guid}/unarchive_address`, { password, second_password, address }, cb);
 
-		this.wallet.unarchiveAddress = (address, cb) =>  this.__Sender(`${this._url}merchant/${this._guid}/unarchive_address`, { password : this._pass1, second_password : this._pass2, address }, cb);
-
-		this.wallet.autoConsolidate = (days, cb) => this.__Sender(`${this._url}merchant/${this._guid}/auto_consolidate`, { password : this._pass1, second_password : this._pass2, days }, cb);
+		this.wallet.autoConsolidate = (days, cb) => this.__Sender(`${this._url}merchant/${guid}/auto_consolidate`, { password, second_password, days }, cb);
 
 		this.wallet.payment = (to, amount, obj, cb) => {
-			if(typeof obj === 'function'){
-				cb = obj;
-				obj = {};
+			let params ={ to, amount, password, second_password };
+
+			if(typeof obj != 'function'){
+				for (let i in obj) {
+					params[i] = obj[i];
+				}
 			}
 
-			obj.to = to;
-			obj.amount = amount;
-			obj.password = this._pass1;
-			obj.second_password = this._pass2;
-			this.__Sender(`${this._url}merchant/${this._guid}/payment`, obj, cb);
+			this.__Sender(`${this._url}merchant/${guid}/payment`, params, cb);
 		};
 
 		this.wallet.sendMany = (recipients, obj, cb) => {
-			if(typeof obj === 'function'){
-				cb = obj;
-				obj = {};
+			let params ={ recipients : JSON.stringify(recipients), password, second_password };
+			
+			if(typeof obj != 'function'){
+				for (let i in obj) {
+					params[i] = obj[i];
+				}
 			}
 
-			obj.password = this._pass1;
-			obj.second_password = this._pass2;
-			obj.recipients = JSON.stringify(recipients);
-			this.__Sender(`${this._url}merchant/${this._guid}/sendmany`, obj, cb);
+			this.__Sender(`${this._url}merchant/${guid}/sendmany`, obj, cb);
 		};
 		return this.wallet;
 	}

@@ -37,8 +37,8 @@ export class chain {
 		this.__Sender(`${this._url}ticker`, params, callback );
 	}
 
-	toBTC (params, callback) {
-		this.__Sender(`${this._url}tobtc`, params, callback );
+	toBTC (currency='USD', value=100, callback) {
+		this.__Sender(`${this._url}tobtc`, { currency, value }, callback );
 	}
 
 	stats (callback) {

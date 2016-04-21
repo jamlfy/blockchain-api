@@ -28,10 +28,7 @@ blockChain.createWallet({
 blockChain.chart('typeChart', callback);
 blockChain.stats(callback);
 blockChain.ticker(callback);
-blockChain.toBTC({
-  currency : 'USD',
-  value : 100
-}, callback);
+blockChain.toBTC('USD', 100, callback);
 
 // Exec
 /* WALLET */

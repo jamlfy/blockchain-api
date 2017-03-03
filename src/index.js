@@ -250,12 +250,11 @@ export default class chain {
 	 * @param  {Function} callback
 	 * @return {Function}
 	 */
-	receivePayments ( xpub, callback, callback) {
+	receivePayments (xpub, callback, result) {
 		return chain.__Sender(`${chain._domain}/${chain._lang}/receive`, {
 			key : this._key,
-			xpub,
-			callback
-		}, callback);
+			xpub, callback
+		}, result);
 	}
 
 	/**
@@ -264,11 +263,11 @@ export default class chain {
 	 * @param  {Function} callback
 	 * @return {Function}
 	 */
-	callbackLogPayments (callback, callback) {
+	callbackLogPayments (callback, result) {
 		return chain.__Sender(`${chain._domain}/${chain._lang}/receive/callback_log`, {
 			key : this._key,
 			callback
-		}, callback);
+		}, result);
 	}
 
 	/**
@@ -277,7 +276,7 @@ export default class chain {
 	 * @param  {Function} callback
 	 * @return {Function}
 	 */
-	static createWallet (obj, callback){
+	static createWallet (obj={}, callback){
 		return chain.__Sender(`${chain._api}/create_wallet`, obj, callback );
 	}
 
@@ -330,7 +329,7 @@ export default class chain {
 	 * @param  {Function} callback
 	 * @return {Function}
 	 */
-	static getDifficulty (obj, callback) {
+	static getDifficulty (obj={}, callback) {
 		return chain.__Sender(`${chain._domain}/${chain._lang}/${chain._q}/getdifficulty`, obj, callback);
 	}
 
@@ -340,7 +339,7 @@ export default class chain {
 	 * @param  {Function} callback
 	 * @return {Function}
 	 */
-	static getBlockCount (obj, callback) {
+	static getBlockCount (obj={}, callback) {
 		return chain.__Sender(`${chain._domain}/${chain._lang}/${chain._q}/getblockcount`, obj, callback);
 	}
 
@@ -350,7 +349,7 @@ export default class chain {
 	 * @param  {Function} callback
 	 * @return {Function}
 	 */
-	static latesthash (obj, callback) {
+	static latesthash (obj={}, callback) {
 		return chain.__Sender(`${chain._domain}/${chain._lang}/${chain._q}/latesthash`, obj, callback);
 	}
 
@@ -360,7 +359,7 @@ export default class chain {
 	 * @param  {Function} callback
 	 * @return {Function}
 	 */
-	static bcperBlock (obj, callback) {
+	static bcperBlock (obj={}, callback) {
 		return chain.__Sender(`${chain._domain}/${chain._lang}/${chain._q}/bcperblock`, obj, callback);
 	}
 
@@ -370,7 +369,7 @@ export default class chain {
 	 * @param  {Function} callback
 	 * @return {Function}
 	 */
-	static totalBc (obj, callback) {
+	static totalBc (obj={}, callback) {
 		return chain.__Sender(`${chain._domain}/${chain._lang}/${chain._q}/totalbc`, obj, callback);
 	}
 
@@ -380,7 +379,7 @@ export default class chain {
 	 * @param  {Function} callback
 	 * @return {Function}
 	 */
-	static probability (obj, callback) {
+	static probability (obj={}, callback) {
 		return chain.__Sender(`${chain._domain}/${chain._lang}/${chain._q}/probability`, obj, callback);
 	}
 
@@ -390,7 +389,7 @@ export default class chain {
 	 * @param  {Function} callback
 	 * @return {Function}
 	 */
-	static hashestowin (obj, callback) {
+	static hashestowin (obj={}, callback) {
 		return chain.__Sender(`${chain._domain}/${chain._lang}/${chain._q}/hashestowin`, obj, callback);
 	}
 
@@ -400,7 +399,7 @@ export default class chain {
 	 * @param  {Function} callback
 	 * @return {Function}
 	 */
-	static nextreTarget (obj, callback) {
+	static nextreTarget (obj={}, callback) {
 		return chain.__Sender(`${chain._domain}/${chain._lang}/${chain._q}/nextretarget`, obj, callback);
 	}
 
@@ -410,7 +409,7 @@ export default class chain {
 	 * @param  {Function} callback
 	 * @return {Function}
 	 */
-	static avgtxSize (obj, callback) {
+	static avgtxSize (obj={}, callback) {
 		return chain.__Sender(`${chain._domain}/${chain._lang}/${chain._q}/avgtxsize`, obj, callback);
 	}
 
@@ -420,7 +419,7 @@ export default class chain {
 	 * @param  {Function} callback
 	 * @return {Function}
 	 */
-	static avgtxValue (obj, callback) {
+	static avgtxValue (obj={}, callback) {
 		return chain.__Sender(`${chain._domain}/${chain._lang}/${chain._q}/avgtxvalue`, obj, callback);
 	}
 
@@ -430,7 +429,7 @@ export default class chain {
 	 * @param  {Function} callback
 	 * @return {Function}
 	 */
-	static interval (obj, callback) {
+	static interval (obj={}, callback) {
 		return chain.__Sender(`${chain._domain}/${chain._lang}/${chain._q}/interval`, obj, callback);
 	}
 
@@ -440,7 +439,7 @@ export default class chain {
 	 * @param  {Function} callback
 	 * @return {Function}
 	 */
-	static eta (obj, callback) {
+	static eta (obj={}, callback) {
 		return chain.__Sender(`${chain._domain}/${chain._lang}/${chain._q}/eta`, obj, callback);
 	}
 
@@ -450,7 +449,7 @@ export default class chain {
 	 * @param  {Function} callback
 	 * @return {Function}
 	 */
-	static avgtxNumber (obj, callback) {
+	static avgtxNumber (obj={}, callback) {
 		return chain.__Sender(`${chain._domain}/${chain._lang}/${chain._q}/avgtxnumber`, obj, callback);
 	}
 
@@ -461,7 +460,7 @@ export default class chain {
 	 * @return {Function}
 	 */
 	static getReceivedByAddress (address, callback) {
-		return chain.__Sender(`${chain._domain}/${chain._lang}/${chain._q}/getreceivedbyaddress/${address}`,{}, callback);
+		return chain.__Sender(`${chain._domain}/${chain._lang}/${chain._q}/getreceivedbyaddress/${address}`, undefined, callback);
 	}
 
 	/**
@@ -471,7 +470,7 @@ export default class chain {
 	 * @return {Function}
 	 */
 	static getSentByAddress (address, callback) {
-		return chain.__Sender(`${chain._domain}/${chain._lang}/${chain._q}/getsentbyaddress/${address}`, {}, callback);
+		return chain.__Sender(`${chain._domain}/${chain._lang}/${chain._q}/getsentbyaddress/${address}`, undefined, callback);
 	}
 
 	/**
@@ -481,10 +480,17 @@ export default class chain {
 	 * @return {Function}
 	 */
 	static addressBalance (address, callback) {
-		return chain.__Sender(`${chain._domain}/${chain._lang}/${chain._q}/addressbalance/${address}`, {}, callback);
+		return chain.__Sender(`${chain._domain}/${chain._lang}/${chain._q}/addressbalance/${address}`, undefined, callback);
 	}
 
-	static addressFirstseen (address, obj, callback) {
+	/**
+	 * [addressFirstseen description]
+	 * @param  {String}   address
+	 * @param  {Object}   obj
+	 * @param  {Function} callback
+	 * @return {Function}
+	 */
+	static addressFirstseen (address, obj={}, callback) {
 		return chain.__Sender(`${chain._domain}/${chain._lang}/${chain._q}/addressfirstseen/${address}`, obj, callback);
 	}
 
@@ -495,7 +501,7 @@ export default class chain {
 	 * @param  {Function} callback
 	 * @return {Function}
 	 */
-	static txTotalbtcOutput (hash, obj, callback) {
+	static txTotalbtcOutput (hash, obj={}, callback) {
 		return chain.__Sender(`${chain._domain}/${chain._lang}/${chain._q}/txtotalbtcoutput/${hash}`, obj, callback);
 	}
 
@@ -506,7 +512,7 @@ export default class chain {
 	 * @param  {Function} callback
 	 * @return {Function}
 	 */
-	static txTotalbtcInput (hash, obj, callback) {
+	static txTotalbtcInput (hash, obj={}, callback) {
 		return chain.__Sender(`${chain._domain}/${chain._lang}/${chain._q}/txtotalbtcoutput/${hash}`, obj, callback);
 	}
 
@@ -517,7 +523,7 @@ export default class chain {
 	 * @param  {Function} callback
 	 * @return {Function}
 	 */
-	static txFee (hash, obj, callback) {
+	static txFee (hash, obj={}, callback) {
 		return chain.__Sender(`${chain._domain}/${chain._lang}/${chain._q}/txtotalbtcoutput/${hash}`, obj, callback);
 	}
 
@@ -529,7 +535,7 @@ export default class chain {
 	 * @param  {Function} callback
 	 * @return {Function}
 	 */
-	static txResult (hash, address, obj, callback) {
+	static txResult (hash, address, obj={}, callback) {
 		return chain.__Sender(`${chain._domain}/${chain._lang}/${chain._q}/txresult/${hash}/${address}`, obj, callback);
 	}
 
@@ -540,7 +546,7 @@ export default class chain {
 	 * @param  {Function} callback
 	 * @return {Function}
 	 */
-	static hashtontxid (hash, obj, callback) {
+	static hashtontxid (hash, obj={}, callback) {
 		return chain.__Sender(`${chain._domain}/${chain._lang}/${chain._q}/hashtontxid/${hash}`, obj, callback);
 	}
 
@@ -551,7 +557,7 @@ export default class chain {
 	 * @param  {Function} callback
 	 * @return {Function}
 	 */
-	static ntxidtohash (hash, obj, callback) {
+	static ntxidtohash (hash, obj={}, callback) {
 		return chain.__Sender(`${chain._domain}/${chain._lang}/${chain._q}/ntxidtohash/${hash}`, obj, callback);
 	}
 
@@ -562,7 +568,7 @@ export default class chain {
 	 * @param  {Function} callback
 	 * @return {Function}
 	 */
-	static addressToHash (address, obj, callback) {
+	static addressToHash (address, obj={}, callback) {
 		return chain.__Sender(`${chain._domain}/${chain._lang}/${chain._q}/addresstohash/${address}`, obj, callback);
 	}
 
@@ -573,7 +579,7 @@ export default class chain {
 	 * @param  {Function} callback
 	 * @return {Function}
 	 */
-	static hashToAddress (hash, obj, callback) {
+	static hashToAddress (hash, obj={}, callback) {
 		return chain.__Sender(`${chain._domain}/${chain._lang}/${chain._q}/hashtoaddress/${hash}`, obj, callback);
 	}
 
@@ -584,7 +590,7 @@ export default class chain {
 	 * @param  {Function} callback
 	 * @return {Function}
 	 */
-	static hashPubKey (hash, obj, callback) {
+	static hashPubKey (hash, obj={}, callback) {
 		return chain.__Sender(`${chain._domain}/${chain._lang}/${chain._q}/hashpubkey/${hash}`, obj, callback);
 	}
 
@@ -595,7 +601,7 @@ export default class chain {
 	 * @param  {Function} callback
 	 * @return {Function}
 	 */
-	static addrPubKey (hash, obj, callback) {
+	static addrPubKey (hash, obj={}, callback) {
 		return chain.__Sender(`${chain._domain}/${chain._lang}/${chain._q}/addrpubkey/${hash}`, obj, callback);
 	}
 
@@ -616,7 +622,7 @@ export default class chain {
 	 * @param  {Function} callback
 	 * @return {Function}
 	 */
-	static newKey (obj, callback) {
+	static newKey (obj={}, callback) {
 		return chain.__Sender(`${chain._domain}/${chain._lang}/${chain._q}/newkey`, obj, callback);
 	}
 
@@ -626,7 +632,7 @@ export default class chain {
 	 * @param  {Function} callback
 	 * @return {Function}
 	 */
-	static unconfirmedCount (obj, callback) {
+	static unconfirmedCount (obj={}, callback) {
 		return chain.__Sender(`${chain._domain}/${chain._lang}/${chain._q}/unconfirmedcount`, obj, callback);
 	}
 
@@ -636,7 +642,7 @@ export default class chain {
 	 * @param  {Function} callback
 	 * @return {Function}
 	 */
-	static price24hr (obj, callback) {
+	static price24hr (obj={}, callback) {
 		return chain.__Sender(`${chain._domain}/${chain._lang}/${chain._q}/24hrprice`, obj, callback);
 	}
 
@@ -646,7 +652,7 @@ export default class chain {
 	 * @param  {Function} callback
 	 * @return {Function}
 	 */
-	static marketCap (obj, callback) {
+	static marketCap (obj={}, callback) {
 		return chain.__Sender(`${chain._domain}/${chain._lang}/${chain._q}/marketcap`, obj, callback);
 	}
 
@@ -656,7 +662,7 @@ export default class chain {
 	 * @param  {Function} callback
 	 * @return {Function}
 	 */
-	static transactionCount24hr (obj, callback) {
+	static transactionCount24hr (obj={}, callback) {
 		return chain.__Sender(`${chain._domain}/${chain._lang}/${chain._q}/24hrtransactioncount`, obj, callback);
 	}
 
@@ -666,7 +672,7 @@ export default class chain {
 	 * @param  {Function} callback
 	 * @return {Function}
 	 */
-	static btcsent24hr (obj, callback) {
+	static btcsent24hr (obj={}, callback) {
 		return chain.__Sender(`${chain._domain}/${chain._lang}/${chain._q}/24hrbtcsent`, obj, callback);
 	}
 
@@ -676,7 +682,7 @@ export default class chain {
 	 * @param  {Function} callback
 	 * @return {Function}
 	 */
-	static hashRate (obj, callback) {
+	static hashRate (obj={}, callback) {
 		return chain.__Sender(`${chain._domain}/${chain._lang}/${chain._q}/hashrate`, obj, callback);
 	}
 
@@ -792,11 +798,9 @@ export default class chain {
 			active = [ active ];
 		}
 
-		active = active.join('|');
-
 		return chain.__Sender(`${chain._domain}/${chain._lang}/unspent`, {
 			format : chain._format,
-			active
+			active : active.join('|')
 		}, callback );
 	}
 
@@ -818,7 +822,7 @@ export default class chain {
 					return callback(new Error(result.error), result);
 				}
 
-				callback(null, result);
+				return callback(null, result);
 			} catch (err) {
 				return callback(err, body);
 			}

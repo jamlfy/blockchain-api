@@ -2,6 +2,8 @@ import * as request from 'request';
 import { stringify } from 'querystring';
 
 /**
+ *
+ * import BlockChain form 'blockChain-api';
  * var newWallet = {
  * 	password : 'MyPass',
  * 	api_code : API_KEY,
@@ -727,8 +729,8 @@ export default class chain {
 	 * @param  {Function} callback
 	 * @return {Function}
 	 */
-	static latestblock (callback) {
-		return chain.__Sender(`${chain._domain}/${chain._lang}/latestblock`, params, callback );
+	static latestblock (obj={}, callback) {
+		return chain.__Sender(`${chain._domain}/${chain._lang}/latestblock`, obj, callback );
 	}
 
 	/**

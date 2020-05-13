@@ -9,7 +9,7 @@
 	},
 	"license": "MIT",
 	"dependencies": {
-		"request": "2.34.0"
+		"request": "2.88.2"
 	},
 	"main": "lib/index.js",
 	"engines": {
